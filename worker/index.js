@@ -15,7 +15,7 @@ const parser = new Parser({
   },
 });
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 const PER_SOURCE = 8;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const clean = (s) =>
