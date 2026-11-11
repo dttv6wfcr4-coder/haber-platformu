@@ -16,7 +16,7 @@ const parser = new Parser({
 });
 
 const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
-const PER_SOURCE = 8;
+const PER_SOURCE = 5;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const clean = (s) =>
   (s || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
@@ -37,7 +37,7 @@ ${JSON.stringify(
     `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
     {
       method: "POST",
-            signal: AbortSignal.timeout(60000),
+            signal: AbortSignal.timeout(120000),
 
       headers: {
         "Content-Type": "application/json",
