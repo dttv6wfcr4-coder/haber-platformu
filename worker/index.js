@@ -37,6 +37,8 @@ ${JSON.stringify(
     `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
     {
       method: "POST",
+            signal: AbortSignal.timeout(60000),
+
       headers: {
         "Content-Type": "application/json",
         "x-goog-api-key": process.env.GEMINI_API_KEY,
@@ -124,7 +126,8 @@ for (const s of sources) {
     console.log(`${s.name}: ${rows.length} haber kaydedildi`);
   } catch (e) {
     failed++;
-    console.error(`${s.name} HATA:`, e.message || e);
+        console.error(`${s.name} HATA:`, e.message || e, e.cause?.message || e.cause?.code || "");
+
   }
   await sleep(6000); // Gemini ücretsiz kota için bekleme
 }
