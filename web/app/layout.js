@@ -4,6 +4,8 @@ import { sb } from "../lib/db";
 export const revalidate = 300;
 
 export const metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+
   title: { default: "Haber Platformu", template: "%s | Haber Platformu" },
   description: "Türkiye ve dünyadan son dakika haberleri, Türkçe ve kategorilere ayrılmış.",
   openGraph: { type: "website", locale: "tr_TR", siteName: "Haber Platformu" },
