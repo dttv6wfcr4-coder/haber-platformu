@@ -6,7 +6,9 @@ export const revalidate = 300;
 export default async function Home() {
   const { data } = await sb
     .from("articles")
-    .select(SELECT)
+        .select(SELECT)
+    .order("is_pinned", { ascending: false })
+
     .order("published_at", { ascending: false })
     .limit(40);
   return (
