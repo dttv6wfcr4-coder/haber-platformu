@@ -41,3 +41,16 @@ h1{font-size:22px;margin:6px 0 14px}
 .adm details summary{cursor:pointer;color:var(--accent);padding:6px 0}
 .adm-pager{justify-content:center;margin:20px 0}
 .adm-login{display:flex;flex-direction:column;gap:10px;margin-top:40px}
+.banner{background:var(--accent);color:#fff;text-align:center;padding:8px 14px;font-size:14px}
+.adm-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.adm-nav a{padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px}
+.adm-msg{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:10px}
+.adm-bulk{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.adm-bulk select{width:auto;flex:1;min-width:140px}
+.adm-all{display:flex;gap:6px;align-items:center;font-size:14px}
+.adm input[type=checkbox]{width:auto}
+.adm-bar{height:10px;background:var(--accent);border-radius:5px}
+.adm-stat{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.adm-stat div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.adm-stat b{display:block;font-size:24px}
+.adm-sec{margin:24px 0;padding-top:10px;border-top:1px solid var(--line)}
