@@ -6,8 +6,7 @@ export const sb = createClient(
 );
 
 export const SELECT =
-  "id,title_tr,summary_tr,original_url,published_at,is_pinned,categories(slug,name_tr),sources(id,name)";
-
+    "id,title_tr,summary_tr,original_url,published_at,is_pinned,image_url,categories(slug,name_tr),sources(id,name,show_images)";
 const COLORS = {
   turkiye: "#D61F2C",
   dunya: "#2563EB",
