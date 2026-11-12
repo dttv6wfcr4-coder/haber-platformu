@@ -24,11 +24,14 @@ export default function Telif() {
       </p>
 
       <h2>Telif hakları</h2>
-      <p>
+            <p>
         Haberlerin tüm hakları ilgili yayıncılara aittir. Sitemizde haberlerin
-        tam metni ve görselleri yayımlanmaz; yalnızca kısa özet gösterilir ve
-        her haberde kaynağın adı ile asıl habere bağlantı verilir.
+        tam metni yayımlanmaz; yalnızca kısa özet gösterilir ve her haberde
+        kaynağın adı ile asıl habere bağlantı verilir. Kapak görselleri bu site
+        için üretilmiş özgün çizimlerdir. Fotoğraf yalnızca kullanımına izin
+        veren kaynaklardan (ör. NASA) ve kaynak belirtilerek gösterilir.
       </p>
+
 
       <h2>İçerik kaldırma talebi</h2>
       <p>
