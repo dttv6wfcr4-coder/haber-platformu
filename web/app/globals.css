@@ -30,3 +30,14 @@ h1{font-size:22px;margin:6px 0 14px}
 .detail h2{margin-top:30px}
 .foot{max-width:1000px;margin:30px auto;padding:14px;font-size:13px;color:var(--muted);text-align:center}
 .foot a{text-decoration:underline}
+.adm,.adm-login{max-width:720px;margin:0 auto}
+.adm-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.adm-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.adm-row a{text-decoration:underline}
+.adm-form{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.adm input,.adm select,.adm textarea,.adm-login input{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit}
+.adm-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;display:flex;flex-direction:column;gap:6px}
+.adm-item.off{opacity:.55}
+.adm details summary{cursor:pointer;color:var(--accent);padding:6px 0}
+.adm-pager{justify-content:center;margin:20px 0}
+.adm-login{display:flex;flex-direction:column;gap:10px;margin-top:40px}
