@@ -163,3 +163,5 @@ a.src:hover{text-decoration:underline}
 .chip.green{color:var(--ok);border-color:var(--ok)}
 .chip.amber{color:var(--warn);border-color:var(--warn)}
 .chip.red{color:var(--accent);border-color:var(--accent)}
+.chips{display:none}
+.top-bar{padding-bottom:10px}
