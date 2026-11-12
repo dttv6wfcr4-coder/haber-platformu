@@ -1,6 +1,6 @@
 import { adminDb, isAdmin } from "../../../lib/admin";
 import { ago } from "../../../lib/db";
-import { toggleSource, addSource, setSourceCategory } from "../actions";
+import { toggleSource, addSource, setSourceCategory, toggleImages } from "../actions";
 import Nav from "../Nav";
 
 export const dynamic = "force-dynamic";
@@ -30,7 +30,8 @@ export default async function Kaynaklar({ searchParams }) {
     .order("sort_order");
   const { data } = await db
     .from("sources")
-    .select("id,name,language,is_active,default_category_slug")
+    .select("id,name,language,is_active,default_category_slug,show_images")
+
     .order("name");
   const { data: recent } = await db
     .from("articles")
@@ -94,7 +95,13 @@ export default async function Kaynaklar({ searchParams }) {
             <select name="slug" defaultValue={s.default_category_slug}>{opts}</select>
             <button type="submit">Kategoriyi kaydet</button>
           </form>
+                    <form action={toggleImages}>
+            <input type="hidden" name="id" value={s.id} />
+            <input type="hidden" name="on" value={s.show_images ? "0" : "1"} />
+            <button type="submit">{s.show_images ? "Görselleri gizle" : "Görselleri göster"}</button>
+          </form>
           <form action={toggleSource}>
+
             <input type="hidden" name="id" value={s.id} />
             <input type="hidden" name="active" value={s.is_active ? "0" : "1"} />
             <button type="submit">{s.is_active ? "Kaynağı kapat" : "Kaynağı aç"}</button>
