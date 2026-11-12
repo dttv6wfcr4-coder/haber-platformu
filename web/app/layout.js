@@ -14,6 +14,7 @@ export const metadata = {
 export const viewport = { width: "device-width", initialScale: 1 };
 
 export default async function RootLayout({ children }) {
+  const { data: bn } = await sb.from("settings").select("value").eq("key", "banner").single();
   const { data: cats } = await sb
     .from("categories")
     .select("slug,name_tr")
@@ -21,6 +22,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="tr">
       <body>
+        {bn?.value ? <div className="banner">{bn.value}</div> : null}
         <header>
           <div className="bar">
             <a className="logo" href="/">HABER</a>
