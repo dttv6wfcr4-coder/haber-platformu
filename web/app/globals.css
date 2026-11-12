@@ -114,3 +114,11 @@ a.src:hover{text-decoration:underline}
 .adm-stat div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
 .adm-stat b{display:block;font-size:24px}
 .adm-sec{margin:24px 0;padding-top:10px;border-top:1px solid var(--line)}
+.cat-head{border-left:6px solid var(--c);padding-left:12px}
+.detail .row-cat{font-size:14px}
+.byline{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:0 0 14px}
+.detail .lead{border-left:4px solid var(--c);padding-left:14px;margin:16px 0}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0}
+.actions .btn{margin:0}
+.actions .save{width:42px;height:42px;margin:0;border:1px solid var(--line);background:var(--surface)}
+.notice{font-size:13px;color:var(--muted);margin:0}
