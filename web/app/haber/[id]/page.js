@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sb, SELECT, catColor } from "../../../lib/db";
 import Card from "../../../components/Card";
+import Visual, { hasPhoto } from "../../../components/Visual";
 import { SaveButton, ShareButton } from "../../../components/Actions";
 
 export const revalidate = 300;
@@ -86,7 +87,10 @@ export default async function Haber({ params }) {
         )}
         <time dateTime={a.published_at}>{when}</time>
       </p>
+      <Visual a={a} className="hero-img" />
+      {hasPhoto(a) && <p className="credit">Görsel: {a.sources.name}</p>}
       {a.summary_tr && <p className="lead">{a.summary_tr}</p>}
+
 
       <div className="actions">
         <a
