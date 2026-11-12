@@ -95,7 +95,18 @@ for (const s of sources) {
       continue;
     }
 
-    const out = await translateAndTag(fresh, slugs);
+        let out;
+    for (let t = 1; t <= 3; t++) {
+      try {
+        out = await translateAndTag(fresh, slugs);
+        break;
+      } catch (err) {
+        if (t === 3) throw err;
+        console.log(`${s.name}: yeniden deneniyor (${t})...`);
+        await sleep(15000 * t);
+      }
+    }
+
 
     const rows = fresh
       .map((f, i) => {
