@@ -72,6 +72,7 @@ export default async function Haber({ params }) {
       <p className="meta">
         {a.sources?.name} ·{" "}
         {new Date(a.published_at).toLocaleString("tr-TR", {
+          timeZone: "Europe/Istanbul",
           dateStyle: "long",
           timeStyle: "short",
         })}
