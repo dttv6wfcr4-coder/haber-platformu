@@ -7,8 +7,7 @@ export default function Card({ a }) {
     minute: "2-digit",
   });
   return (
-   <a className="card" href={`/haber/${a.id}`}>
-    {a.image_url && <img src={a.image_url} alt="" loading="lazy" />}
+    <a className="card" href={`/haber/${a.id}`}>
       <div className="body">
         <span className="tag">{a.categories?.name_tr}</span>
         <h2>{a.title_tr}</h2>
