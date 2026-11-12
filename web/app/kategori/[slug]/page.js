@@ -2,8 +2,11 @@ import { notFound } from "next/navigation";
 import { sb, SELECT, groupByTime, catColor } from "../../../lib/db";
 import Card from "../../../components/Card";
 import { LoadMore } from "../../../components/Client";
+import Fresh from "../../../components/Fresh";
 
-export const revalidate = 60;
+
+export const dynamic = "force-dynamic";
+
 
 export async function generateMetadata({ params }) {
   const { data: c } = await sb
@@ -32,7 +35,13 @@ export default async function Kategori({ params }) {
     .eq("category_id", c.id)
     .order("published_at", { ascending: false })
     .limit(30);
+    const { data: lastRow } = await sb
+    .from("articles")
+    .select("created_at")
+    .order("created_at", { ascending: false })
+    .limit(1);
   const list = data || [];
+
   const groups = groupByTime(list);
 
   return (
@@ -50,6 +59,8 @@ export default async function Kategori({ params }) {
         <LoadMore before={list[29].published_at} categoryId={c.id} />
       )}
       {!list.length && <p className="empty">Bu kategoride henüz haber yok.</p>}
+      <Fresh latest={lastRow?.[0]?.created_at} categoryId={c.id} />
+
     </>
   );
 }
