@@ -98,7 +98,10 @@ for (const s of sources) {
         let out;
     for (let t = 1; t <= 3; t++) {
       try {
-        out = await translateAndTag(fresh, slugs);
+                out = s.language === "tr"
+          ? fresh.map((f, i) => ({ i, title_tr: f.title, summary_tr: f.text.slice(0, 220), category: s.default_category_slug }))
+          : await translateAndTag(fresh, slugs);
+
         break;
       } catch (err) {
         if (t === 3) throw err;
@@ -140,7 +143,7 @@ for (const s of sources) {
         console.error(`${s.name} HATA:`, e.message || e, e.cause?.message || e.cause?.code || "");
 
   }
-  await sleep(6000); // Gemini ücretsiz kota için bekleme
+  if (s.language !== "tr") await sleep(6000); // Gemini ücretsiz kota için bekleme
 }
 
 console.log(`Bitti. Kaydedilen: ${saved}, hatalı kaynak: ${failed}`);
