@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { sb, SELECT, catColor } from "../lib/db";
 import Card from "./Card";
+import Drawer from "./Drawer";
+
 
 const isAdminPath = (p) => (p || "").startsWith("/yonetim");
 
@@ -54,7 +56,9 @@ export function Chrome({ cats, banner }) {
     <>
       {banner ? <div className="banner">{banner}</div> : null}
       <header className="top">
-        <div className="top-bar">
+                <div className="top-bar">
+          <Drawer cats={cats} />
+
           <Link href="/" className="brand">
             <span className="live" aria-hidden="true" />
             Haber
