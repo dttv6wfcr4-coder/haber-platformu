@@ -1,6 +1,6 @@
 export default function Card({ a }) {
   const date = new Date(a.published_at).toLocaleString("tr-TR", {
-    timeZone:"Europe/Istanbul",
+    timeZone: "Europe/Istanbul",
     day: "numeric",
     month: "short",
     hour: "2-digit",
