@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
       images: a.image_url ? [a.image_url] : [],
     },
     twitter: {
-      card: a.image_url ? "summary_large_image" : "summary",
+      card: "summary",
       title: a.title_tr,
       description: desc,
     },
@@ -51,7 +51,6 @@ export default async function Haber({ params }) {
     "@type": "NewsArticle",
     headline: a.title_tr,
     description: a.summary_tr || undefined,
-    image: a.image_url ? [a.image_url] : undefined,
     datePublished: a.published_at,
     mainEntityOfPage: `${BASE}/haber/${a.id}`,
     publisher: { "@type": "Organization", name: "Haber Platformu" },
@@ -77,8 +76,7 @@ export default async function Haber({ params }) {
           timeStyle: "short",
         })}
       </p>
-      {a.image_url && <img className="hero" src={a.image_url} alt="" />}
-      {a.summary_tr && <p className="lead">{a.summary_tr}</p>}
+       {a.summary_tr && <p className="lead">{a.summary_tr}</p>}
       <a className="btn" href={a.original_url} target="_blank" rel="noopener noreferrer nofollow">
         Haberin tamamı için kaynağa git →
       </a>
