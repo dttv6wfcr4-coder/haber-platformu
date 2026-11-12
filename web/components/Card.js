@@ -1,21 +1,51 @@
+import Link from "next/link";
+import { ago, catColor } from "../lib/db";
+import { SaveButton } from "./Actions";
+
 export default function Card({ a }) {
-  const date = new Date(a.published_at).toLocaleString("tr-TR", {
-    timeZone: "Europe/Istanbul",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
   return (
-    <a className="card" href={`/haber/${a.id}`}>
-      <div className="body">
-        <span className="tag">{a.categories?.name_tr}</span>
-        <h2>{a.title_tr}</h2>
-        {a.summary_tr && <p>{a.summary_tr}</p>}
-        <span className="meta">
-          {a.sources?.name} · {date}
-        </span>
+    <article className="row" style={{ "--c": catColor(a.categories?.slug) }}>
+      <div className="row-top">
+        {a.sources && (
+          <Link className="src" href={`/kaynak/${a.sources.id}`}>
+            {a.sources.name}
+          </Link>
+        )}
+        <time dateTime={a.published_at}>{ago(a.published_at)}</time>
+        <SaveButton id={a.id} />
       </div>
-    </a>
+      <h2 className="row-title">
+        <Link href={`/haber/${a.id}`}>{a.title_tr}</Link>
+      </h2>
+      {a.summary_tr && <p className="row-sum">{a.summary_tr}</p>}
+      {a.categories && (
+        <Link className="row-cat" href={`/kategori/${a.categories.slug}`}>
+          <i />
+          {a.categories.name_tr}
+        </Link>
+      )}
+    </article>
+  );
+}
+
+export function TopCard({ a }) {
+  return (
+    <article className="top-card" style={{ "--c": catColor(a.categories?.slug) }}>
+      {a.categories && (
+        <Link className="row-cat" href={`/kategori/${a.categories.slug}`}>
+          <i />
+          {a.categories.name_tr}
+        </Link>
+      )}
+      <h2>
+        <Link href={`/haber/${a.id}`}>{a.title_tr}</Link>
+      </h2>
+      {a.summary_tr && <p>{a.summary_tr}</p>}
+      <div className="row-top">
+        <span className="src">{a.sources?.name}</span>
+        <time dateTime={a.published_at}>{ago(a.published_at)}</time>
+        <SaveButton id={a.id} />
+      </div>
+    </article>
   );
 }
