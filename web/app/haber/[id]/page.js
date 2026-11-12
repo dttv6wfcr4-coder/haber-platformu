@@ -1,12 +1,18 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { sb, SELECT } from "../../../lib/db";
+import { sb, SELECT, catColor } from "../../../lib/db";
 import Card from "../../../components/Card";
+import { SaveButton, ShareButton } from "../../../components/Actions";
 
-export const revalidate = 600;
+export const revalidate = 300;
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 async function getArticle(id) {
-  const { data } = await sb.from("articles").select(SELECT).eq("id", id).single();
+  const { data } = await sb
+    .from("articles")
+    .select(`${SELECT},category_id`)
+    .eq("id", id)
+    .single();
   return data;
 }
 
@@ -24,13 +30,8 @@ export async function generateMetadata({ params }) {
       description: desc,
       url: `${BASE}/haber/${a.id}`,
       publishedTime: a.published_at,
-      images: a.image_url ? [a.image_url] : [],
     },
-    twitter: {
-      card: "summary",
-      title: a.title_tr,
-      description: desc,
-    },
+    twitter: { card: "summary", title: a.title_tr, description: desc },
   };
 }
 
@@ -41,10 +42,16 @@ export default async function Haber({ params }) {
   const { data: related } = await sb
     .from("articles")
     .select(SELECT)
-    .eq("category_id", a.categories ? (await sb.from("categories").select("id").eq("slug", a.categories.slug).single()).data?.id : 0)
+    .eq("category_id", a.category_id)
     .neq("id", a.id)
     .order("published_at", { ascending: false })
     .limit(6);
+
+  const when = new Date(a.published_at).toLocaleString("tr-TR", {
+    timeZone: "Europe/Istanbul",
+    dateStyle: "long",
+    timeStyle: "short",
+  });
 
   const ld = {
     "@context": "https://schema.org",
@@ -57,35 +64,50 @@ export default async function Haber({ params }) {
   };
 
   return (
-    <article className="detail">
+    <article className="detail" style={{ "--c": catColor(a.categories?.slug) }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(ld).replace(/</g, "\\u003c"),
         }}
       />
-      <a className="tag" href={`/kategori/${a.categories?.slug}`}>
-        {a.categories?.name_tr}
-      </a>
+      {a.categories && (
+        <Link className="row-cat" href={`/kategori/${a.categories.slug}`}>
+          <i />
+          {a.categories.name_tr}
+        </Link>
+      )}
       <h1>{a.title_tr}</h1>
-      <p className="meta">
-        {a.sources?.name} ·{" "}
-        {new Date(a.published_at).toLocaleString("tr-TR", {
-          timeZone: "Europe/Istanbul",
-          dateStyle: "long",
-          timeStyle: "short",
-        })}
+      <p className="byline">
+        {a.sources && (
+          <Link className="src" href={`/kaynak/${a.sources.id}`}>
+            {a.sources.name}
+          </Link>
+        )}
+        <time dateTime={a.published_at}>{when}</time>
       </p>
-       {a.summary_tr && <p className="lead">{a.summary_tr}</p>}
-      <a className="btn" href={a.original_url} target="_blank" rel="noopener noreferrer nofollow">
-        Haberin tamamı için kaynağa git →
-      </a>
-      <p className="meta">Bu içerik yapay zekâ ile Türkçeye çevrilip özetlenmiştir.</p>
+      {a.summary_tr && <p className="lead">{a.summary_tr}</p>}
+
+      <div className="actions">
+        <a
+          className="btn"
+          href={a.original_url}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+        >
+          Haberin tamamını kaynakta oku
+        </a>
+        <ShareButton title={a.title_tr} path={`/haber/${a.id}`} />
+        <SaveButton id={a.id} />
+      </div>
+      <p className="notice">
+        Bu özet yapay zekâ ile çevrilip kısaltılmıştır ve hata içerebilir. Doğru ve eksiksiz bilgi için kaynağa bakın.
+      </p>
 
       {related?.length > 0 && (
         <>
-          <h2>İlgili Haberler</h2>
-          <div className="grid">
+          <h2>Aynı kategoriden</h2>
+          <div className="feed">
             {related.map((r) => <Card key={r.id} a={r} />)}
           </div>
         </>
