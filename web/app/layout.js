@@ -35,7 +35,11 @@ export default async function RootLayout({ children }) {
             ))}
           </nav>
         </header>
-        <main>{children}</main>
+                <main>{children}</main>
+        <footer className="foot">
+          <a href="/telif">Telif ve İletişim</a> · İçerikler yapay zekâ ile çevrilip özetlenir; haberin tamamı için kaynağa gidin.
+        </footer>
+
       </body>
     </html>
   );
