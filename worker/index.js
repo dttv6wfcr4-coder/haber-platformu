@@ -65,6 +65,8 @@ const { data: sources } = await sb
   .select("*")
   .eq("is_active", true);
 
+const { data: bw } = await sb.from("blocked_words").select("word");
+const blocked = (bw || []).map((b) => b.word.toLowerCase());
 let saved = 0;
 let failed = 0;
 
@@ -81,7 +83,8 @@ for (const s of sources) {
     const seen = new Set((existing || []).map((e) => e.original_url));
 
     const fresh = items
-      .filter((i) => !seen.has(i.link))
+            .filter((i) => !seen.has(i.link))
+      .filter((i) => !blocked.some((w) => `${i.title} ${i.contentSnippet || ""}`.toLowerCase().includes(w)))
       .map((i) => ({
         link: i.link,
         title: clean(i.title),
