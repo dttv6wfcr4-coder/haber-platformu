@@ -206,3 +206,12 @@ export async function runWorker() {
   }
   back("/yonetim/araclar", msg);
 }
+export async function toggleImages(formData) {
+  if (!isAdmin()) return;
+  await adminDb()
+    .from("sources")
+    .update({ show_images: formData.get("on") === "1" })
+    .eq("id", Number(formData.get("id")));
+  revalidatePath("/yonetim/kaynaklar");
+  done();
+}
