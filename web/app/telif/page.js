@@ -46,7 +46,7 @@ export default function Telif() {
         değerlendirilir ve uygun görülen içerikler kaldırılır.
       </p>
       <p>
-        <strong>E-posta:</strong> iletisim@ornek.com
+        <strong>E-posta:</strong> aberattascii@gmail.com
       </p>
       
     </article>
