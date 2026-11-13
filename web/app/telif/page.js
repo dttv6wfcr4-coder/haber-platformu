@@ -24,32 +24,31 @@ export default function Telif() {
       </p>
 
       <h2>Telif hakları</h2>
-            <p>
+      <p>
         Haberlerin tüm hakları ilgili yayıncılara aittir. Sitemizde haberlerin
-        tam metni yayımlanmaz; yalnızca kısa özet gösterilir ve her haberde
-        kaynağın adı ile asıl habere bağlantı verilir. Kapak görselleri bu site
-        için üretilmiş özgün çizimlerdir. Fotoğraf yalnızca kullanımına izin
-        veren kaynaklardan (ör. NASA) ve kaynak belirtilerek gösterilir.
+        tam metni ve görselleri yayımlanmaz; yalnızca kısa özet gösterilir ve
+        her haberde kaynağın adı ile asıl habere bağlantı verilir.
       </p>
 
-      </p>
-             <h2>Gizlilik</h2>
+            <h2>Gizlilik</h2>
       <p>
         Site, ziyaretçi sayısını ölçmek için anonim istatistik tutar: sayfa adresi,
         ülke, cihaz türü ve günlük değişen anonim bir kod kaydedilir. IP adresi
         saklanmaz, çerez kullanılmaz.
       </p>
 
-      
+
       <h2>İçerik kaldırma talebi</h2>
-      </p>
+      <p>
         Bir içeriğin hak sahibiyseniz ve sitemizde yer almasını istemiyorsanız
         lütfen aşağıdaki adrese, ilgili sayfanın bağlantısı ve hak sahipliğinizi
         gösteren kısa bir açıklama ile yazın. Talepler en kısa sürede
         değerlendirilir ve uygun görülen içerikler kaldırılır.
       </p>
       <p>
-        <strong>E-posta:</strong> aberattascii@gmail.com
+        <strong>E-posta:</strong> iletisim@ornek.com
+      </p>
+      
     </article>
   );
 }
