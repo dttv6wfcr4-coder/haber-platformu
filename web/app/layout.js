@@ -3,6 +3,8 @@ import { Inter, Barlow_Condensed } from "next/font/google";
 import { sb } from "../lib/db";
 import { Chrome, BottomNav, Footer } from "../components/Client";
 import Track from "../components/Track";
+import ReadState from "../components/ReadState";
+
 
 const sans = Inter({
   subsets: ["latin", "latin-ext"],
@@ -36,7 +38,9 @@ export const viewport = {
   ],
 };
 
-const THEME = `try{var t=localStorage.getItem("tema");if(t)document.documentElement.dataset.theme=t}catch(e){}`;
+const THEME = `try{var h=document.documentElement,t=localStorage.getItem("tema");if(t)h.dataset.theme=t;var p=JSON.parse(localStorage.getItem("tercih")||"{}");if(p.font&&p.font!=="m")h.dataset.font=p.font;if(p.compact)h.dataset.compact="1";if(p.nosum)h.dataset.nosum="1"}catch(e){}`;
+
+
 
 export default async function RootLayout({ children }) {
   const { data: cats } = await sb
@@ -55,6 +59,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body>
         <Track />
+        <ReadState />
         <Chrome cats={cats || []} banner={bn?.value || ""} />
         <main className="wrap">{children}</main>
         <Footer />
