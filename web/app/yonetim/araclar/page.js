@@ -1,6 +1,8 @@
 import { adminDb, isAdmin } from "../../../lib/admin";
 import { addWord, delWord, saveBanner, cleanup, runWorker } from "../actions";
 import Nav from "../Nav";
+import { applyBlocked } from "../actions";
+
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +42,10 @@ export default async function Araclar({ searchParams }) {
 
       <div className="adm-sec">
         <h2>Yasaklı kelimeler</h2>
+        <form action={applyBlocked}>
+          <button type="submit">Mevcut haberlere uygula</button>
+        </form>
+
         <p className="meta">Başlık veya özetinde geçen haberler hiç kaydedilmez. Küçük harfle yazın.</p>
         <form action={addWord} className="adm-form">
           <input name="word" placeholder="kelime" required />
