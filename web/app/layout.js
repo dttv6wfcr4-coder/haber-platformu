@@ -2,6 +2,8 @@ import "./globals.css";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import { sb } from "../lib/db";
 import { Chrome, BottomNav, Footer } from "../components/Client";
+import Track from "../components/Track";
+
 
 const sans = Inter({
   subsets: ["latin", "latin-ext"],
@@ -53,7 +55,9 @@ export default async function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: THEME }} />
       </head>
       <body>
+        <Track />
         <Chrome cats={cats || []} banner={bn?.value || ""} />
+
         <main className="wrap">{children}</main>
         <Footer />
         <BottomNav />
