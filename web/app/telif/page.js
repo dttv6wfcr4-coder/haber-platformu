@@ -42,6 +42,7 @@ export default function Telif() {
 
       
       <h2>İçerik kaldırma talebi</h2>
+      </p>
         Bir içeriğin hak sahibiyseniz ve sitemizde yer almasını istemiyorsanız
         lütfen aşağıdaki adrese, ilgili sayfanın bağlantısı ve hak sahipliğinizi
         gösteren kısa bir açıklama ile yazın. Talepler en kısa sürede
