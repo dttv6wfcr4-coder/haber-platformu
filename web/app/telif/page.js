@@ -39,8 +39,9 @@ export default function Telif() {
         ülke, cihaz türü ve günlük değişen anonim bir kod kaydedilir. IP adresi
         saklanmaz, çerez kullanılmaz.
       </p>
+
+      
       <h2>İçerik kaldırma talebi</h2>
-      <p>
         Bir içeriğin hak sahibiyseniz ve sitemizde yer almasını istemiyorsanız
         lütfen aşağıdaki adrese, ilgili sayfanın bağlantısı ve hak sahipliğinizi
         gösteren kısa bir açıklama ile yazın. Talepler en kısa sürede
