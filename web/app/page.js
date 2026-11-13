@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { sb, SELECT, groupByTime } from "../lib/db";
+import { trending } from "../lib/trend";
 import Card, { TopCard } from "../components/Card";
 import { LoadMore } from "../components/Client";
 import Fresh from "../components/Fresh";
+import Markets from "../components/Markets";
+import Popular from "../components/Popular";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [{ data }, { data: lastRow }] = await Promise.all([
+  const since = new Date(Date.now() - 36 * 3600 * 1000).toISOString();
+  const [{ data }, { data: lastRow }, { data: titles }] = await Promise.all([
     sb
       .from("articles")
       .select(SELECT)
@@ -19,6 +23,7 @@ export default async function Home() {
       .select("created_at")
       .order("created_at", { ascending: false })
       .limit(1),
+    sb.from("articles").select("title_tr").gte("published_at", since).limit(500),
   ]);
   const all = data || [];
   const top = all.slice(0, 5);
@@ -29,6 +34,7 @@ export default async function Home() {
     (x, y) => new Date(y.published_at) - new Date(x.published_at)
   )[0];
   const hot = newest && Date.now() - new Date(newest.published_at).getTime() < 3 * 3600 * 1000;
+  const words = trending((titles || []).map((t) => t.title_tr));
 
   return (
     <>
@@ -45,6 +51,19 @@ export default async function Home() {
         </Link>
       )}
 
+      <Markets />
+
+      {words.length > 0 && (
+        <div className="trend" aria-label="Gündemde">
+          <span>Gündemde</span>
+          {words.map((w) => (
+            <Link key={w} href={`/ara?q=${encodeURIComponent(w)}`}>
+              {w.charAt(0).toLocaleUpperCase("tr-TR") + w.slice(1)}
+            </Link>
+          ))}
+        </div>
+      )}
+
       {top.length > 0 && (
         <section aria-label="Manşet">
           <div className="lead-rail">
@@ -52,6 +71,8 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      <Popular />
 
       {groups.map(([label, list]) => (
         <section key={label}>
