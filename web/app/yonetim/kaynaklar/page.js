@@ -102,7 +102,13 @@ export default async function Kaynaklar({ searchParams }) {
             <input type="hidden" name="on" value={s.show_images ? "0" : "1"} />
             <button type="submit">{s.show_images ? "Görselleri gizle" : "Görselleri göster"}</button>
           </form>
+          <form action={hideSource} className="adm-row">
+            <input type="hidden" name="id" value={s.id} />
+            <button type="submit" name="hide" value="1">Tüm haberlerini gizle</button>
+            <button type="submit" name="hide" value="0">Geri getir</button>
+          </form>
           <form action={toggleSource}>
+
 
             <input type="hidden" name="id" value={s.id} />
             <input type="hidden" name="active" value={s.is_active ? "0" : "1"} />
