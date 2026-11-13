@@ -215,3 +215,33 @@ export async function toggleImages(formData) {
   revalidatePath("/yonetim/kaynaklar");
   done();
 }
+export async function hideSource(formData) {
+  if (!isAdmin()) return;
+  const hide = formData.get("hide") === "1";
+  await adminDb()
+    .from("articles")
+    .update({ is_hidden: hide })
+    .eq("source_id", Number(formData.get("id")));
+  done();
+  back(
+    "/yonetim/kaynaklar",
+    hide ? "Kaynağın tüm haberleri gizlendi" : "Kaynağın haberleri geri getirildi"
+  );
+}
+
+export async function applyBlocked() {
+  if (!isAdmin()) return;
+  const db = adminDb();
+  const { data: words } = await db.from("blocked_words").select("word");
+  for (const w of words || []) {
+    const p = w.word.replace(/[%,()]/g, " ").trim();
+    if (p.length >= 3) {
+      await db
+        .from("articles")
+        .update({ is_hidden: true })
+        .or(`title_tr.ilike.%${p}%,summary_tr.ilike.%${p}%`);
+    }
+  }
+  done();
+  back("/yonetim/araclar", "Yasaklı kelimeler mevcut haberlere uygulandı");
+}
