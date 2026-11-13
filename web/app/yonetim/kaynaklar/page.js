@@ -2,6 +2,8 @@ import { adminDb, isAdmin } from "../../../lib/admin";
 import { ago } from "../../../lib/db";
 import { toggleSource, addSource, setSourceCategory, toggleImages } from "../actions";
 import Nav from "../Nav";
+import { hideSource } from "../actions";
+
 
 export const dynamic = "force-dynamic";
 
