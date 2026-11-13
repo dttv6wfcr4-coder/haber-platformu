@@ -1,18 +1,18 @@
 import "./globals.css";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, Barlow_Condensed } from "next/font/google";
 import { sb } from "../lib/db";
 import { Chrome, BottomNav, Footer } from "../components/Client";
 import Track from "../components/Track";
-
 
 const sans = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-sans",
   display: "swap",
 });
-const serif = Source_Serif_4({
+const head = Barlow_Condensed({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-serif",
+  weight: ["600", "700", "800"],
+  variable: "--font-head",
   display: "swap",
 });
 
@@ -22,9 +22,8 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: { default: "Haber Platformu", template: "%s | Haber Platformu" },
   description: "Türkiye ve dünyadan son dakika haberleri, Türkçe ve kategorilere ayrılmış.",
-    openGraph: { type: "website", locale: "tr_TR", siteName: "Haber Platformu" },
+  openGraph: { type: "website", locale: "tr_TR", siteName: "Haber Platformu" },
   appleWebApp: { capable: true, title: "Haber", statusBarStyle: "default" },
-
 };
 
 export const viewport = {
@@ -32,8 +31,8 @@ export const viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F2F4F7" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B111B" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E0F12" },
   ],
 };
 
@@ -50,14 +49,13 @@ export default async function RootLayout({ children }) {
     .eq("key", "banner")
     .single();
   return (
-    <html lang="tr" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
+    <html lang="tr" className={`${sans.variable} ${head.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME }} />
       </head>
       <body>
         <Track />
         <Chrome cats={cats || []} banner={bn?.value || ""} />
-
         <main className="wrap">{children}</main>
         <Footer />
         <BottomNav />
