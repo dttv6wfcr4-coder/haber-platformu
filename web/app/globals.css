@@ -174,3 +174,14 @@ a.src:hover{text-decoration:underline}
 .hero-img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;margin:14px 0 6px;background:var(--line)}
 .credit{font-size:12.5px;color:var(--muted);margin:0 0 14px}
 .fresh{position:fixed;top:calc(68px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:25;padding:9px 18px;border:0;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+.adm h2{font-size:15px;color:var(--muted);margin:22px 0 8px}
+.live-card{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:14px;padding:16px;margin:12px 0}
+.live-card b{display:block;font-family:var(--serif);font-size:44px;line-height:1.1;margin:4px 0 8px}
+.live-card .live{display:inline-block;margin-right:6px}
+.adm-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 12px;margin:10px 0}
+.bar-row{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;font-size:14px;padding:5px 0}
+.bar-row .adm-bar{min-width:2px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.kv:first-child{border-top:0}
+.kv span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-tabs a{font-size:10.5px}
