@@ -32,7 +32,13 @@ export default function Telif() {
         veren kaynaklardan (ör. NASA) ve kaynak belirtilerek gösterilir.
       </p>
 
-
+      </p>
+             <h2>Gizlilik</h2>
+      <p>
+        Site, ziyaretçi sayısını ölçmek için anonim istatistik tutar: sayfa adresi,
+        ülke, cihaz türü ve günlük değişen anonim bir kod kaydedilir. IP adresi
+        saklanmaz, çerez kullanılmaz.
+      </p>
       <h2>İçerik kaldırma talebi</h2>
       <p>
         Bir içeriğin hak sahibiyseniz ve sitemizde yer almasını istemiyorsanız
@@ -42,14 +48,6 @@ export default function Telif() {
       </p>
       <p>
         <strong>E-posta:</strong> aberattascii@gmail.com
-      </p>
-             <h2>Gizlilik</h2>
-      <p>
-        Site, ziyaretçi sayısını ölçmek için anonim istatistik tutar: sayfa adresi,
-        ülke, cihaz türü ve günlük değişen anonim bir kod kaydedilir. IP adresi
-        saklanmaz, çerez kullanılmaz.
-      </p>
-
     </article>
   );
 }
