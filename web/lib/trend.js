@@ -18,3 +18,13 @@ export function trending(titles, limit = 10) {
     .slice(0, limit)
     .map(([w]) => w);
 }
+export function keywords(title, limit = 2) {
+  const words = [
+    ...new Set(
+      (String(title).toLocaleLowerCase("tr-TR").match(/\p{L}{5,}/gu) || []).filter(
+        (w) => !STOP.has(w)
+      )
+    ),
+  ];
+  return words.sort((a, b) => b.length - a.length).slice(0, limit);
+}
