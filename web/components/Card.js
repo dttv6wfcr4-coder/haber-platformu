@@ -12,7 +12,8 @@ const clock = (iso) =>
 
 export default function Card({ a }) {
   return (
-    <article className="wire" style={{ "--c": catColor(a.categories?.slug) }}>
+        <article className="wire" data-id={a.id} style={{ "--c": catColor(a.categories?.slug) }}>
+
       <time className="wire-time" dateTime={a.published_at}>
         {clock(a.published_at)}
       </time>
