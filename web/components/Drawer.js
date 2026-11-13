@@ -76,7 +76,11 @@ export default function Drawer({ cats }) {
                 ))}
               </nav>
               <div className="drawer-foot" onClick={() => setOpen(false)}>
+                <Link href="/kategoriler">Tüm kategoriler</Link>
+                <Link href="/arsiv">Arşiv</Link>
                 <Link href="/kaydedilenler">Kaydedilenler</Link>
+                <Link href="/ayarlar">Ayarlar</Link>
+
                 <Link href="/ara">Ara</Link>
                 <Link href="/telif">Telif ve iletişim</Link>
               </div>
