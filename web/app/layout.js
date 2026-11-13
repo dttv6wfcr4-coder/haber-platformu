@@ -4,6 +4,8 @@ import { sb } from "../lib/db";
 import { Chrome, BottomNav, Footer } from "../components/Client";
 import Track from "../components/Track";
 import ReadState from "../components/ReadState";
+import ScrollTop from "../components/ScrollTop";
+
 
 
 const sans = Inter({
@@ -60,6 +62,8 @@ export default async function RootLayout({ children }) {
       <body>
         <Track />
         <ReadState />
+        <ScrollTop />
+
         <Chrome cats={cats || []} banner={bn?.value || ""} />
         <main className="wrap">{children}</main>
         <Footer />
