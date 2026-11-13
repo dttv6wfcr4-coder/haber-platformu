@@ -1,18 +1,18 @@
 name: Haber Topla
+
 on:
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
+
 concurrency:
   group: haber-topla
   cancel-in-progress: false
 
 jobs:
-
-  build:
-        runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
