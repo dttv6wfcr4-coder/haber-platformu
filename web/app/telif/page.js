@@ -43,6 +43,13 @@ export default function Telif() {
       <p>
         <strong>E-posta:</strong> aberattascii@gmail.com
       </p>
+             <h2>Gizlilik</h2>
+      <p>
+        Site, ziyaretçi sayısını ölçmek için anonim istatistik tutar: sayfa adresi,
+        ülke, cihaz türü ve günlük değişen anonim bir kod kaydedilir. IP adresi
+        saklanmaz, çerez kullanılmaz.
+      </p>
+
     </article>
   );
 }
