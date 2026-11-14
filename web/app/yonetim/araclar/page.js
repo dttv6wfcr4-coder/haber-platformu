@@ -1,8 +1,16 @@
 import { adminDb, isAdmin } from "../../../lib/admin";
-import { addWord, delWord, saveBanner, cleanup, runWorker } from "../actions";
+import {
+  addWord,
+  delWord,
+  saveBanner,
+  cleanup,
+  runWorker,
+  applyBlocked,
+  bulkAddSources,
+  testFeed,
+  resetVisits,
+} from "../actions";
 import Nav from "../Nav";
-import { applyBlocked } from "../actions";
-
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +43,12 @@ export default async function Araclar({ searchParams }) {
       <div className="adm-sec">
         <h2>Duyuru bandı</h2>
         <form action={saveBanner} className="adm-form">
-          <input name="banner" defaultValue={bn?.value || ""} maxLength={200} placeholder="Boş bırakırsan kaldırılır" />
+          <input
+            name="banner"
+            defaultValue={bn?.value || ""}
+            maxLength={200}
+            placeholder="Boş bırakırsan kaldırılır"
+          />
           <button type="submit">Kaydet</button>
         </form>
       </div>
@@ -45,8 +58,9 @@ export default async function Araclar({ searchParams }) {
         <form action={applyBlocked}>
           <button type="submit">Mevcut haberlere uygula</button>
         </form>
-
-        <p className="meta">Başlık veya özetinde geçen haberler hiç kaydedilmez. Küçük harfle yazın.</p>
+        <p className="adm-note">
+          Başlık veya özetinde geçen haberler hiç kaydedilmez. Küçük harfle yazın.
+        </p>
         <form action={addWord} className="adm-form">
           <input name="word" placeholder="kelime" required />
           <button type="submit">Ekle</button>
@@ -61,13 +75,48 @@ export default async function Araclar({ searchParams }) {
       </div>
 
       <div className="adm-sec">
+        <h2>Toplu kaynak ekle</h2>
+        <p className="adm-note">
+          Her satıra: Ad | RSS adresi | dil (tr ya da en) | kategori adresi (örn. spor, dunya, ekonomi)
+        </p>
+        <form action={bulkAddSources} className="adm-form">
+          <textarea
+            name="lines"
+            className="big"
+            placeholder="Örnek Haber | https://ornek.com/rss | tr | turkiye"
+          />
+          <button type="submit">Ekle</button>
+        </form>
+        <a href="/yonetim/disa-aktar/kaynaklar">Kaynak yedeğini indir (aynı biçimde)</a>
+      </div>
+
+      <div className="adm-sec">
+        <h2>RSS testi</h2>
+        <form action={testFeed} className="adm-form">
+          <input name="url" type="url" placeholder="https://.../rss" required />
+          <button type="submit">Test et</button>
+        </form>
+      </div>
+
+      <div className="adm-sec">
         <h2>Eski haberleri temizle</h2>
         <form action={cleanup} className="adm-form">
           <input name="days" type="number" min="7" defaultValue="30" />
           <label className="adm-all">
-            <input type="checkbox" name="ok" value="1" /> Bu kadar günden eski haberlerin kalıcı silineceğini onaylıyorum (sabitler hariç)
+            <input type="checkbox" name="ok" value="1" /> Bu kadar günden eski haberlerin
+            kalıcı silineceğini onaylıyorum (sabitler hariç)
           </label>
           <button type="submit">Sil</button>
+        </form>
+      </div>
+
+      <div className="adm-sec">
+        <h2>Ziyaret verisini sıfırla</h2>
+        <form action={resetVisits} className="adm-form">
+          <label className="adm-all">
+            <input type="checkbox" name="ok" value="1" /> Tüm ziyaret kayıtlarının silineceğini onaylıyorum
+          </label>
+          <button type="submit">Sıfırla</button>
         </form>
       </div>
 
