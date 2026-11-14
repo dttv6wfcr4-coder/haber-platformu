@@ -128,6 +128,8 @@ async function save(rows) {
 }
 
 let failed = 0;
+const failedNames = [];
+
 const active = sources.filter((s) => /^https?:\/\//i.test(s.rss_url));
 const feeds = await pool(active, 10, async (s) => {
   try {
@@ -145,6 +147,8 @@ const feeds = await pool(active, 10, async (s) => {
       }));
   } catch (e) {
     failed++;
+    failedNames.push(s.name);
+
     console.error(`${s.name} HATA:`, e.message || e);
     return [];
   }
