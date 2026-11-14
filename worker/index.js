@@ -210,6 +210,8 @@ await sb.from("worker_runs").insert({
   saved,
   failed,
   total: active.length,
+  errors: failedNames.slice(0, 12).join(", ") || null,
+
   seconds: Math.round((Date.now() - (DEADLINE - 9 * 60 * 1000)) / 1000),
 });
 console.log(`Bitti. Kaydedilen: ${saved}, hatalı kaynak: ${failed}/${active.length}`);
