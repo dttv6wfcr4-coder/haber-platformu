@@ -255,3 +255,10 @@ a.adm-item span{font-size:14px;color:var(--muted);font-weight:400}
 .quota.warn i{background:var(--accent)}
 .adm textarea.big{min-height:130px}
 .adm-note{font-size:13px;color:var(--muted);margin:6px 0}
+.ai-note{margin:16px 0;padding:12px 14px;border:2px solid var(--ink);border-radius:6px;font-size:14px;line-height:1.45}
+.ai-note b{display:block;font-family:var(--head);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.srcbox{margin:16px 0;padding:0;border-top:1px solid var(--line);font-size:14px}
+.srcbox div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.srcbox dt{color:var(--muted)}
+.srcbox dd{margin:0;font-weight:600;text-align:right}
+.btn{letter-spacing:.03em}
