@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { adminDb, isAdmin } from "../../lib/admin";
-import { login, updateArticle, setHidden, togglePin, bulkAction } from "./actions";
+import { updateArticle, setHidden, togglePin, bulkAction } from "./actions";
+import { loginSafe } from "./auth";
 import Nav from "./Nav";
 import SelectAll from "./SelectAll";
 
@@ -8,10 +10,15 @@ const PER = 20;
 
 export default async function Yonetim({ searchParams }) {
   if (!isAdmin()) {
+    const hata = searchParams.hata;
     return (
       <div className="adm-login">
         <h1>Yönetim</h1>
-        <form action={login}>
+        {hata === "kilit" && (
+          <p className="adm-msg">Çok fazla yanlış deneme. 15 dakika sonra tekrar dene.</p>
+        )}
+        {hata === "sifre" && <p className="adm-msg">Şifre yanlış.</p>}
+        <form action={loginSafe}>
           <input type="password" name="pw" placeholder="Şifre" autoComplete="current-password" required />
           <button type="submit">Giriş</button>
         </form>
@@ -20,12 +27,19 @@ export default async function Yonetim({ searchParams }) {
   }
 
   const db = adminDb();
-  const { data: cats } = await db.from("categories").select("id,name_tr").order("sort_order");
   const durum = searchParams.durum || "gorunen";
   const kat = searchParams.kat || "";
+  const kaynak = searchParams.kaynak || "";
+  const sure = searchParams.sure || "";
   const q = (searchParams.q || "").replace(/[%,()]/g, " ").trim();
   const page = Math.max(1, Number(searchParams.sayfa) || 1);
   const from = (page - 1) * PER;
+
+  const [{ data: cats }, { data: srcs }, { count: newReports }] = await Promise.all([
+    db.from("categories").select("id,name_tr").order("sort_order"),
+    db.from("sources").select("id,name").order("name"),
+    db.from("reports").select("id", { count: "exact", head: true }).eq("status", "yeni"),
+  ]);
 
   let query = db
     .from("articles")
@@ -39,12 +53,24 @@ export default async function Yonetim({ searchParams }) {
   else if (durum === "sabit") query = query.eq("is_pinned", true);
   else if (durum !== "hepsi") query = query.eq("is_hidden", false);
   if (kat) query = query.eq("category_id", Number(kat));
+  if (kaynak) query = query.eq("source_id", Number(kaynak));
+  if (Number(sure) > 0) {
+    query = query.gte("published_at", new Date(Date.now() - Number(sure) * 86400000).toISOString());
+  }
   if (q) query = query.or(`title_tr.ilike.%${q}%,summary_tr.ilike.%${q}%`);
 
   const { data, count } = await query;
   const pages = Math.max(1, Math.ceil((count || 0) / PER));
   const link = (p) =>
-    `/yonetim?${new URLSearchParams({ durum, kat, q, sayfa: String(p) })}`;
+    `/yonetim?${new URLSearchParams({ durum, kat, kaynak, sure, q, sayfa: String(p) })}`;
+
+  const views = {};
+  const paths = (data || []).map((a) => `/haber/${a.id}`);
+  if (paths.length) {
+    const { data: v } = await db.rpc("article_views", { p_ids: paths });
+    (v || []).forEach((r) => (views[r.path] = r.n));
+  }
+
   const catOptions = (cats || []).map((c) => (
     <option key={c.id} value={c.id}>{c.name_tr}</option>
   ));
@@ -53,6 +79,12 @@ export default async function Yonetim({ searchParams }) {
     <div className="adm">
       <Nav />
       <h1>Haberler ({count || 0})</h1>
+
+      {newReports > 0 && (
+        <Link href="/yonetim/bildirimler" className="adm-msg" style={{ display: "block" }}>
+          {newReports} yeni bildirim var. Görmek için dokun.
+        </Link>
+      )}
 
       <form method="get" action="/yonetim" className="adm-form">
         <input name="q" defaultValue={q} placeholder="Ara…" />
@@ -66,6 +98,18 @@ export default async function Yonetim({ searchParams }) {
           <option value="">Tüm kategoriler</option>
           {catOptions}
         </select>
+        <select name="kaynak" defaultValue={kaynak}>
+          <option value="">Tüm kaynaklar</option>
+          {(srcs || []).map((s) => (
+            <option key={s.id} value={s.id}>{s.name}</option>
+          ))}
+        </select>
+        <select name="sure" defaultValue={sure}>
+          <option value="">Tüm zamanlar</option>
+          <option value="1">Son 24 saat</option>
+          <option value="7">Son 7 gün</option>
+          <option value="30">Son 30 gün</option>
+        </select>
         <button type="submit">Filtrele</button>
       </form>
 
@@ -76,7 +120,7 @@ export default async function Yonetim({ searchParams }) {
           <option value="show">Geri getir</option>
           <option value="pin">Sabitle</option>
           <option value="unpin">Sabitlemeyi kaldır</option>
-          <option value="cat">Kategoriyi değiştir →</option>
+          <option value="cat">Kategoriyi değiştir</option>
         </select>
         <select name="category_id">{catOptions}</select>
         <button type="submit">Uygula</button>
@@ -89,18 +133,22 @@ export default async function Yonetim({ searchParams }) {
           </label>
           <span className="tag">{a.categories?.name_tr}</span>
           <strong>{a.is_pinned ? "📌 " : ""}{a.title_tr}</strong>
-          <span className="meta">
-            {a.sources?.name} ·{" "}
-            {new Date(a.published_at).toLocaleString("tr-TR", {
-              timeZone: "Europe/Istanbul",
-              day: "numeric",
-              month: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-            {a.is_hidden ? " · GİZLİ" : ""}
-          </span>
+          <div className="adm-row meta">
+            <span>{a.sources?.name}</span>
+            <span>
+              {new Date(a.published_at).toLocaleString("tr-TR", {
+                timeZone: "Europe/Istanbul",
+                day: "numeric",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+            <span>{views[`/haber/${a.id}`] || 0} okunma</span>
+            {a.is_hidden && <span>GİZLİ</span>}
+          </div>
           <div className="adm-row">
+            <Link href={`/haber/${a.id}`}>Sitede aç</Link>
             <a href={a.original_url} target="_blank" rel="noopener noreferrer">Kaynak</a>
             <form action={setHidden}>
               <input type="hidden" name="id" value={a.id} />
@@ -134,9 +182,9 @@ export default async function Yonetim({ searchParams }) {
       {!data?.length && <p className="empty">Haber bulunamadı.</p>}
 
       <div className="adm-row adm-pager">
-        {page > 1 && <a href={link(page - 1)}>← Önceki</a>}
+        {page > 1 && <Link href={link(page - 1)}>Önceki</Link>}
         <span>{page} / {pages}</span>
-        {page < pages && <a href={link(page + 1)}>Sonraki →</a>}
+        {page < pages && <Link href={link(page + 1)}>Sonraki</Link>}
       </div>
     </div>
   );
