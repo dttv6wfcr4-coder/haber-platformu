@@ -248,3 +248,10 @@ html[data-compact] .wire-title{font-size:calc(21px*var(--z,1))}
 .report-form select,.report-form textarea,.report-form input{padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--soft);color:var(--ink);font:inherit}
 .report-form button{padding:11px;border:0;border-radius:6px;background:var(--ink);color:var(--bg);font-weight:800}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+a.adm-item{color:var(--ink)}
+a.adm-item span{font-size:14px;color:var(--muted);font-weight:400}
+.quota{height:14px;background:var(--soft);border-radius:3px;overflow:hidden;margin:8px 0}
+.quota i{display:block;height:100%;background:var(--ink)}
+.quota.warn i{background:var(--accent)}
+.adm textarea.big{min-height:130px}
+.adm-note{font-size:13px;color:var(--muted);margin:6px 0}
