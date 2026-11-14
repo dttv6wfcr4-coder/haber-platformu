@@ -133,7 +133,8 @@ Kurallar:
 - Verilmeyen hiçbir bilgiyi ekleme, tahmin yürütme, yorum katma.
 - Doğrulanmamış iddiaları gerçek gibi yazma; "iddia edildi", "açıkladı" gibi atıf kullan.
 - Bilgi yetersizse özeti kısa tut.
-- İddia, suçlama, ölüm, cinsel saldırı, çocuk, savaş suçu ya da hukuki belirsizlik içeren hassas haberlerde "review": true yaz, diğerlerinde false.
+- Yalnızca adı geçen gerçek kişilere yönelik ağır suçlama ya da iddia, cinsel saldırı, çocuklara yönelik şiddet veya açık hukuki belirsizlik içeren haberlerde "review": true yaz. Genel savaş, siyaset, ekonomi, spor, kaza ve afet haberlerinde false yaz.
+
 Kategoriler: ${slugs.join(", ")}
 Sadece şu biçimde JSON dizisi döndür:
 [{"i":0,"title_tr":"...","summary_tr":"...","category":"...","review":false}]
